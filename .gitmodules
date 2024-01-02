@@ -1,0 +1,18 @@
+[submodule "MARKETING-desafioG3"]
+	path = MARKETING-desafioG3
+	url = https://github.com/juanadevesat/MARKETING-desafioG3.git
+[submodule "UX-UI-desafioG3"]
+	path = UX-UI-desafioG3
+	url = https://github.com/juanadevesat/UX-UI-desafioG3.git
+[submodule "DATA-desafioG3"]
+	path = DATA-desafioG3
+	url = https://github.com/juanadevesat/DATA-desafioG3.git
+[submodule "FULLSTACK-desafioG3"]
+	path = FULLSTACK-desafioG3
+	url = https://github.com/juanadevesat/FULLSTACK-desafioG3.git
+[submodule "CIBER-desafioG3"]
+	path = CIBER-desafioG3
+	url = https://github.com/juanadevesat/CIBER-desafioG3.git
+[submodule "CLOUD-desafioG3"]
+	path = CLOUD-desafioG3
+	url = https://github.com/juanadevesat/CLOUD-desafioG3.git
