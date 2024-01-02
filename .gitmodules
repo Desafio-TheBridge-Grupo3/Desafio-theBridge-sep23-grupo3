@@ -16,3 +16,6 @@
 [submodule "CLOUD-desafioG3"]
 	path = CLOUD-desafioG3
 	url = https://github.com/juanadevesat/CLOUD-desafioG3.git
+[submodule "DESAFIO_TRIPULACIONES_SEVERAL"]
+	path = DESAFIO_TRIPULACIONES_SEVERAL
+	url = https://github.com/PALOMAOC/DESAFIO_TRIPULACIONES_SEVERAL.git
