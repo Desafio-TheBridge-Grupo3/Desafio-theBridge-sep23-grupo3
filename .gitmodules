@@ -19,3 +19,6 @@
 [submodule "DESAFIO_TRIPULACIONES_SEVERAL"]
 	path = DESAFIO_TRIPULACIONES_SEVERAL
 	url = https://github.com/PALOMAOC/DESAFIO_TRIPULACIONES_SEVERAL.git
+[submodule "PRODUCCION"]
+	path = PRODUCCION
+	url = https://github.com/juanadevesat/PRODUCCION.git
