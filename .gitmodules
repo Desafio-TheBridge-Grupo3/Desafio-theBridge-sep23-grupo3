@@ -22,3 +22,6 @@
 [submodule "PRODUCCION"]
 	path = PRODUCCION
 	url = https://github.com/Desafio-TheBridge-Grupo3/PRODUCCION.git
+[submodule "PRODUCCION-desafioG3"]
+	path = PRODUCCION-desafioG3
+	url = https://github.com/Desafio-TheBridge-Grupo3/PRODUCCION-desafioG3.git
