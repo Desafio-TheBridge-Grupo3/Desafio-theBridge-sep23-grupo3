@@ -8,7 +8,7 @@ trigger:
       - main
   paths:
     include:
-      - client
+      - server
 
 resources:
 - repo: self
