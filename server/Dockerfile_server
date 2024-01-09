@@ -1,0 +1,12 @@
+# Utilizar la imagen base de Node.js 20.9 hasta que ciber tenga imagen segura
+FROM node:20.9-alpine
+
+WORKDIR /app
+
+COPY . ./server
+
+RUN cd server && npm install
+
+EXPOSE 3000
+
+CMD ["sh", "-c", "cd server && npm start"]
