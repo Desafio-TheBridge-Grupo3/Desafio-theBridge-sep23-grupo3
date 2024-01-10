@@ -50,10 +50,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-- task: SonarQubeAnalyze@5
-  inputs:
-    jdkversion: 'JAVA_HOME'
+    - task: SonarQubeAnalyze@5
+      inputs:
+        jdkversion: 'JAVA_HOME'
 
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
+    - task: SonarQubePublish@5
+      inputs:
+        pollingTimeoutSec: '300'
