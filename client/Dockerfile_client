@@ -1,4 +1,4 @@
-FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpine-secure-desafio
+FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpine-secure-desafio:1.0
 
 WORKDIR /app
 

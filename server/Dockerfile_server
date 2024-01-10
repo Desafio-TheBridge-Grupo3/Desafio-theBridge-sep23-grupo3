@@ -1,5 +1,4 @@
-# Utilizar la imagen base de Node.js 20.9 hasta que ciber tenga imagen segura
-FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpine-secure-desafio
+FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpine-secure-desafio:1.0
 
 WORKDIR /app
 
