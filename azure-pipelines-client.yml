@@ -1,4 +1,12 @@
 # Docker
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'SonarQube con Ciberseguridad'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'several-calculadora_several-calculadora_AYzyzxzSddip3MgJjKBI'
+    cliProjectName: 'github-client'
+    cliSources: './'
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
@@ -42,3 +50,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+- task: SonarQubeAnalyze@5
+  inputs:
+    jdkversion: 'JAVA_HOME'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
