@@ -1,11 +1,15 @@
 FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpine-secure-desafio:1.0
 
+ENV APP_PORT=5173
+
 WORKDIR /app
 
-COPY server/ .
+COPY . server/
 
 RUN cd server && npm install
 
-EXPOSE 3000
+EXPOSE $APP_PORT
+
+HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit
 
 CMD ["sh", "-c", "cd server && npm start"]
