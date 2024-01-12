@@ -6,10 +6,9 @@ from selenium.webdriver.chrome.service import Service
 import time
 from os import environ
 
-URL = environ.get("URL_CANDELA")
-USER = environ.get("USER_CANDELA")
-PASSWORD = environ.get("PASSWORD_CANDELA")
-CUPS = environ.get("JAVI_CUPS")
+URL = "https://agentes.candelaenergia.es/#/login"
+USER = "CA001507"
+PASSWORD = "CI001-507/258071"
 
 def get_soup_info(driver):
     candela_info = {
@@ -89,11 +88,11 @@ def webscraping_chrome_candelas(cups):
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
 
-    servicio = Service('/usr/local/bin/chromedriver')
+    servicio = Service('/home/site/wwwroot/chromedriver-linux64/chromedriver')
     driver = webdriver.Chrome(service=servicio, options=chrome_options)
     driver.get(URL)
     assert "Candela"
-    time.sleep(5)
+    time.sleep(3)
 
     # Login in candelas web
 
@@ -120,7 +119,3 @@ def webscraping_chrome_candelas(cups):
     driver.quit()
 
     return info
-
-a = webscraping_chrome_candelas(CUPS)
-
-print(a)
