@@ -14,7 +14,7 @@ my_module_path = os.path.join(script_dir, "..")
 sys.path.append(my_module_path)
 os.chdir(os.path.dirname(__file__))
 
-from webscraping import ws_app
+import ws_app
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
