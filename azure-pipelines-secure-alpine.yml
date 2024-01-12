@@ -19,7 +19,7 @@ variables:
   imageRepository: 'alpinesecuredesafio'
   containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Docker-base/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
