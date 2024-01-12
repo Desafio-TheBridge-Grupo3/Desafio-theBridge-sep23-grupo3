@@ -6,9 +6,9 @@ from selenium.webdriver.chrome.service import Service
 import time
 from os import environ
 
-URL = "https://agentes.candelaenergia.es/#/login"
-USER = "CA001507"
-PASSWORD = "CI001-507/258071"
+URL = environ["url-candela"]
+USER = environ["user-candela"]
+PASSWORD = environ["password-candela"]
 
 def get_soup_info(driver):
     candela_info = {
