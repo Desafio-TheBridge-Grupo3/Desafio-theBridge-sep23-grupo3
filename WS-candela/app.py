@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, redirect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from cerberus import Validator
+from werkzeug.serving import make_server
 import signal
 
 import os
@@ -60,4 +61,5 @@ def calcule_energy_consumption():
 
 
 if __name__ == '__main__':
-  app.run(debug = False, host = '0.0.0.0', port=environ.get("PORT", 5000))
+  server = make_server('127.0.0.1', 5000, app)
+  server.serve_forever()
