@@ -8,8 +8,7 @@ WORKDIR /home/site/wwwroot
 ENV CHROME_VERSION="120.0.6099.109" \
     URL_CANDELA="https://agentes.candelaenergia.es/#/login" \
     USER_CANDELA="CA001507" \
-    PASSWORD_CANDELA="CI001-507/258071" \
-    JAVI_CUPS="ES0022000006250162PZ1P"
+    PASSWORD_CANDELA="CI001-507/258071"
 
 # Install essential packages
 RUN apt update && \
