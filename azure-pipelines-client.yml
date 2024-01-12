@@ -19,7 +19,7 @@ variables:
   imageRepository: 'clientseveralcalculadora'
   containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
   dockerfilePath: '**/client/Dockerfile_client'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
