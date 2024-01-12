@@ -27,5 +27,5 @@ RUN cp chromedriver-linux64/chromedriver /usr/local/bin/
 # install packages in requirements.txt
 RUN pip install -r requirements.txt
 
-CMD ["python3", "function_app.py"]
+CMD ["python3", "app.py"]
 
