@@ -8,17 +8,17 @@ trigger:
       - main
   paths:
     include:
-      - client
+      - Docker-base 
 
 resources:
 - repo: self
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '7518cb5a-e004-4437-b18b-f7c98ae1c8cb'
-  imageRepository: 'clientseveralcalculadora'
+  dockerRegistryServiceConnection: '8fe4f9b1-9c76-4903-8d63-e570b7bbf413'
+  imageRepository: 'alpinesecuredesafio'
   containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
-  dockerfilePath: '**/client/Dockerfile_client'
+  dockerfilePath: '$(Build.SourcesDirectory)/Docker-base/Dockerfile'
   tag: 'latest'
 
   # Agent VM image name
