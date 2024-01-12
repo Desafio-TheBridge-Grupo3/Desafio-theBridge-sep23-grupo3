@@ -8,7 +8,7 @@ trigger:
       - main
   paths:
     include:
-      - WS-candela
+      - client
 
 resources:
 - repo: self
