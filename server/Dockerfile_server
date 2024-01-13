@@ -2,14 +2,13 @@ FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
 
 ENV APP_PORT=5173
 
-WORKDIR /app
+WORKDIR /app/server
 
-COPY . server/
+COPY . .
 
 RUN cd server && npm install
 
 EXPOSE $APP_PORT
 
-CMD ["sh", "-c", "cd server/config && \
-                  psql --host=$(SQL_HOST) --port=5432 --username=$(SQL_USER) --dbname=$(SQL_DATABASE) --set=sslmode=require --set=sslrootcert=DigiCertGlobalRootCA.crt.pem && \
+CMD ["sh", "-c", "psql --host=$(SQL_HOST) --port=5432 --username=$(SQL_USER) --dbname=$(SQL_DATABASE) --set=sslmode=require --set=sslrootcert=DigiCertGlobalRootCA.crt.pem && \
                   cd .. && npm start"]
