@@ -1,9 +1,5 @@
 FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
 
-USER root
-
-RUN apk add postgresql-client
-
 ENV APP_PORT=5173
 
 WORKDIR /app
