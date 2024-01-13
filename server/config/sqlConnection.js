@@ -1,17 +1,11 @@
-const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const db = new Sequelize(process.env.SQL_DATABASE, process.env.SQL_USER, `${process.env.SQL_PWD}`, {
-    host: process.env.SQL_HOST,
-    dialect: 'postgres',
-    define: {
-        freezeTableName: true,
-        timestamps: false,
-    },
-    dialectOptions: {
-        encrypt: true
-    }
-});
+const db = new Client({host:process.env.SQL_HOST, 
+            user:process.env.SQL_USER, 
+            password:process.env.SQL_PWD, 
+            database:process.env.SQL_DATABASE, 
+            port:5432, 
+            ssl:{ca:fs.readFileSync("{ca-cert filename}")}});
 
 const connectSQL = async () => {
     try {   
