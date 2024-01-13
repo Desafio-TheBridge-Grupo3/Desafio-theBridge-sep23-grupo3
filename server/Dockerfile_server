@@ -10,6 +10,6 @@ RUN cd server && npm install
 
 EXPOSE $APP_PORT
 
-HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit
+RUN apk install postgresql-client
 
-CMD ["sh", "-c", "cd server && npm start"]
+CMD ["sh", "-c", "./postinstall.sh && cd server && npm start"]
