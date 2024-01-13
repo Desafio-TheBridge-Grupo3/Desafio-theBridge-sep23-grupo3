@@ -59,7 +59,6 @@ def webscraping_chrome_candelas(cups):
     time.sleep(8)
 
     # Login in candelas web
-
     driver.find_element(By.ID, "select_1").click()
     time.sleep(1)
     driver.find_element(By.ID, "select_option_3").click()

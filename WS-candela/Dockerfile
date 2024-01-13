@@ -5,10 +5,7 @@ USER root
 
 WORKDIR /home/site/wwwroot
 
-ENV CHROME_VERSION="120.0.6099.109" \
-    URL_CANDELA="https://agentes.candelaenergia.es/#/login" \
-    USER_CANDELA="CA001507" \
-    PASSWORD_CANDELA="CI001-507/258071"
+ENV CHROME_VERSION="120.0.6099.109"
 
 # Install essential packages
 RUN apt-get update && \
@@ -26,5 +23,5 @@ RUN cp chromedriver-linux64/chromedriver /usr/local/bin/
 # install packages in requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-CMD ["python3", "function_app.py"]
+CMD ["python3", "app.py"]
 
