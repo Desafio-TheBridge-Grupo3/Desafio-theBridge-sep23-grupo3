@@ -10,6 +10,8 @@ RUN cd server && npm install
 
 EXPOSE $APP_PORT
 
-RUN apk add postgresql-client
+RUN apk add postgresql-client && wget --no-check-certificate https://dl.cacerts.digicert.com/DigiCertGlobalRootCA.crt.pem
 
-CMD ["sh", "-c", "cd server && ./postinstall.sh && npm start"]
+CMD ["sh", "-c", "cd server && \
+                  psql --host=$(SQL_HOST) --port=5432 --username=$(SQL_USER) --dbname=$(SQL_DATABASE) --set=sslmode=require --set=sslrootcert=DigiCertGlobalRootCA.crt.pem && \
+                  npm start"]
