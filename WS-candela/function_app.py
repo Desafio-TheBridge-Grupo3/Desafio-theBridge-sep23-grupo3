@@ -1,19 +1,23 @@
 import json
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 from cerberus import Validator
+import threading
+from queue import Queue
+from werkzeug.serving import make_server
+import signal
 
 import os
 from os import environ
 import sys
-
 import ws_app
 
 script_dir = os.getcwd()
 my_module_path = os.path.join(script_dir, "..")
 sys.path.append(my_module_path)
 os.chdir(os.path.dirname(__file__))
+
+queue_info = Queue()
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -26,26 +30,44 @@ limiter = Limiter(
 def home():
    return "API"
 
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    if request.method == 'POST':
+        print("Deteniendo la aplicación...")
+        os.kill(os.getpid(), signal.SIGINT)
+        return jsonify(message="Server shutting down..."), 200
+    else:
+        return jsonify(error="Invalid request method"), 405
+
+def ws_candela(cups):
+        info = ws_app.webscraping_chrome_candelas(cups)
+        queue_info.put(info)
+
 @app.route('/cups20', methods=['GET'])
 @limiter.limit("10 per minute")
 def calcule_energy_consumption():
     
-    # response = requests.get('https://example.com', verify=True)
-
     schema = {
     'cups20': {'type': 'string', 'minlength': 20, 'maxlength': 22},
     }
     validator = Validator(schema)
 
-    record = json.loads(request.data)
+    try:
+        record = json.loads(request.data)
 
-    if validator.validate(record):
-        cups20 = record["cups20"]
-        info = ws_app.webscraping_chrome_candelas(cups20)
-        return {"info": info}
-    else:
-        return {'error': f'Data is invalid {validator.errors}'}
-
+        if validator.validate(record):
+            cups = record["cups20"]
+            print(cups)
+            thread = threading.Thread(target=ws_candela, args=(cups,))
+            thread.start()
+            thread.join()
+            info = queue_info.get()
+            return {"info": info}
+        else:
+            return {'error': f'Data is invalid {validator.errors}'}
+    except Exception as e:
+        return {'error': f'{e}'}
 
 if __name__ == '__main__':
-  app.run(debug = True, host = '0.0.0.0', port=environ.get("PORT", 5000))
+  server = make_server('127.0.0.1', 5000, app)
+  server.serve_forever()
