@@ -6,47 +6,11 @@ from selenium.webdriver.chrome.service import Service
 import time
 from os import environ
 
-URL = environ["url-candela"]
-USER = environ["user-candela"]
-PASSWORD = environ["password-candela"]
+URL = "https://agentes.candelaenergia.es/#/login"
+USER = "CA001507"
+PASSWORD = "CI001-507/258071"
 
 def get_soup_info(driver):
-    candela_info = {
-        "rate": [],
-        "anual_consumption": [],
-        "anual_consumption_p1": [],
-        "anual_consumption_p2": [],
-        "anual_consumption_p3": [],
-        "anual_consumption_p4": [],
-        "anual_consumption_p5": [],
-        "anual_consumption_p6": [],
-        "anual_power_p1": [],
-        "anual_power_p2": [],
-        "anual_power_p3": [],
-        "anual_power_p4": [],
-        "anual_power_p5": [],
-        "anual_power_p6": []
-    }
-
-    candela_info["rate"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[9]').text
-    candela_info["anual_consumption"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[11]').text
-    candela_info["anual_consumption_p1"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[13]').text
-    candela_info["anual_consumption_p2"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[14]').text
-    candela_info["anual_consumption_p3"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[15]').text
-    candela_info["anual_consumption_p4"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[16]').text
-    candela_info["anual_consumption_p5"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[17]').text
-    candela_info["anual_consumption_p6"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[18]').text
-    candela_info["anual_power_p1"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[21]').text
-    candela_info["anual_power_p2"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[22]').text
-    candela_info["anual_power_p3"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[23]').text
-    candela_info["anual_power_p4"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[24]').text
-    candela_info["anual_power_p5"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[25]').text
-    candela_info["anual_power_p6"] = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/md-tabs/md-tabs-content-wrapper/md-tab-content/div[1]/md-content/md-card/md-table-container/table/tbody/tr[2]/td[26]').text
-
-    return candela_info
-
-
-def get_candelas_chrome_info(driver):
     candela_info = {
         "rate": [],
         "anual_consumption": [],
@@ -92,10 +56,9 @@ def webscraping_chrome_candelas(cups):
     driver = webdriver.Chrome(service=servicio, options=chrome_options)
     driver.get(URL)
     assert "Candela"
-    time.sleep(5)
+    time.sleep(8)
 
     # Login in candelas web
-
     driver.find_element(By.ID, "select_1").click()
     time.sleep(1)
     driver.find_element(By.ID, "select_option_3").click()
