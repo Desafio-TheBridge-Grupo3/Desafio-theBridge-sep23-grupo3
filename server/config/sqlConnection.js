@@ -1,11 +1,24 @@
-const { Client } = require('pg');
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const db = new Client({host:process.env.SQL_HOST, 
-            user:process.env.SQL_USER, 
-            password:process.env.SQL_PWD, 
-            database:process.env.SQL_DATABASE, 
-            port:5432});
+const db = new Sequelize(process.env.SQL_DATABASE, process.env.SQL_USER, process.env.SQL_PWD, {
+    host: process.env.SQL_HOST,
+    dialect: 'postgres',
+    options: {
+        encrypt: true,
+        database: process.env.SQL_DATABASE
+    },
+    port : 5432,
+    define: {
+        freezeTableName: true,
+        timestamps: false,
+    },
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    }
+});
 
 const connectSQL = async () => {
     try {   
