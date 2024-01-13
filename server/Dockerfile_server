@@ -1,6 +1,9 @@
 FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
 
-ENV APP_PORT=5173
+ENV APP_PORT=5173 \
+    SQL_HOST="database-desafio-grupo3.postgres.database.azure.com" \
+    SQL_USER="grupo3desafio" \
+    SQL_DATABASE="proyectoTribu"
 
 WORKDIR /app/server
 
