@@ -1,5 +1,9 @@
 FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
 
+USER root
+
+RUN apk add postgresql-client
+
 ENV APP_PORT=5173
 
 WORKDIR /app
@@ -10,8 +14,6 @@ RUN cd server && npm install
 
 EXPOSE $APP_PORT
 
-RUN apk add postgresql-client
-
-CMD ["sh", "-c", "cd server/config && \
+CMD ["sh", "-c", "cd config && \
                   psql --host=$(SQL_HOST) --port=5432 --username=$(SQL_USER) --dbname=$(SQL_DATABASE) --set=sslmode=require --set=sslrootcert=DigiCertGlobalRootCA.crt.pem && \
                   cd .. && npm start"]
