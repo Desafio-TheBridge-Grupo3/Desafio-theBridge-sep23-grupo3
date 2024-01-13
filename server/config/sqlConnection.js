@@ -1,22 +1,12 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const db = new Sequelize(process.env.SQL_DATABASE, process.env.SQL_USER, process.env.SQL_PWD, {
+const db = new Sequelize(process.env.SQL_DATABASE, process.env.SQL_USER, `${process.env.SQL_PWD}`, {
     host: process.env.SQL_HOST,
     dialect: 'postgres',
-    options: {
-        encrypt: true,
-        database: process.env.SQL_DATABASE
-    },
-    port : 5432,
     define: {
         freezeTableName: true,
         timestamps: false,
-    },
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
     }
 });
 
