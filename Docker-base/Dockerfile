@@ -12,7 +12,7 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
 # The user the app should run as
 ENV APP_USER=app
 # The home directory
-ENV APP_DIR="/$APP_USER"
+ENV APP_DIR="/home/$APP_USER"
 # Where persistent data (volume) should be stored
 ENV DATA_DIR "$APP_DIR/data"
 # Where configuration should be stored
@@ -101,5 +101,7 @@ RUN chmod 500 $APP_DIR/post-install.sh
 WORKDIR $APP_DIR
 
 RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
+
+RUN apk add postgresql-client
 
 RUN ./post-install.sh
