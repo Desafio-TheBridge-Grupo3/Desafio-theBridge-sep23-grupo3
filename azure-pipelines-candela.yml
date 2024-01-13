@@ -19,7 +19,7 @@ variables:
   imageRepository: 'candelawebscraping'
   containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/WS-candela/Dockerfile'
-  tag: 'latest'
+  tag: '$(Build.BuildId)'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
