@@ -92,7 +92,7 @@ def webscraping_chrome_candelas(cups):
     driver = webdriver.Chrome(service=servicio, options=chrome_options)
     driver.get(URL)
     assert "Candela"
-    time.sleep(3)
+    time.sleep(5)
 
     # Login in candelas web
 
