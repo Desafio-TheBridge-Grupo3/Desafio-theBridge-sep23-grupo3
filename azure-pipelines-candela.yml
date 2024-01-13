@@ -8,17 +8,17 @@ trigger:
       - main
   paths:
     include:
-      - client
+      - WS-candela
 
 resources:
 - repo: self
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '7518cb5a-e004-4437-b18b-f7c98ae1c8cb'
-  imageRepository: 'clientseveralcalculadora'
+  dockerRegistryServiceConnection: '0d416464-35e8-4787-88ca-35e7175ef60b'
+  imageRepository: 'candelawebscraping'
   containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
-  dockerfilePath: '**/client/Dockerfile_client'
+  dockerfilePath: '$(Build.SourcesDirectory)/WS-candela/Dockerfile'
   tag: 'latest'
 
   # Agent VM image name
