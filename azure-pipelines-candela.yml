@@ -55,7 +55,7 @@ stages:
         azureSubscription: $(azureSubscription)
         location: europewest
         acrName: $(registryname)
-        imageToDeploy: $(imageRepository):$(tag)
+        imageToDeploy: $(containerRegistry$/(imageRepository):$(tag)
         resourceGroup: $(resourceGroup)
         containerAppEnvironment: $(containerAppEnvironment)
         containerAppName: $(containerAppName)
