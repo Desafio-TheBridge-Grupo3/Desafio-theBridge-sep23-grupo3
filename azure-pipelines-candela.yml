@@ -21,6 +21,12 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/WS-candela/Dockerfile'
   tag: '$(Build.BuildId)'
 
+  # Container Apps Variables
+  azureSubscription: 'Desafio Tripulaciones'
+  resourceGroup: 'RECURSOS-desafiotripulacionesG3'
+  containerAppEnvironment: 'env-container-app-desafiotripulacionesg3'
+  containerAppName: 'ws-candela-calculadora-several'
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -42,3 +48,15 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+    - task: AzureContainerApps@1
+      displayName: Update Container App
+      inputs:
+        azureSubscription: $(azureSubscription)
+        acrName: $(containerRegistry)
+        imageToDeploy: $(imageRepository):$(tag)
+        resourceGroup: $(resourceGroup)
+        containerAppEnvironment: $(containerAppEnvironment)
+        containerAppName: $(containerAppName)
+        disableTelemetry: false
+
