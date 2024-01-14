@@ -1,0 +1,16 @@
+#logo {
+    max-width: 161px;
+    min-width: 161px;
+    max-height: 39px;
+}
+
+header {
+    display: flex;
+    min-width: 1539.990px;
+    max-width: 1539.990px;
+    height: 88px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: $red;
+}

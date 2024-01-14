@@ -1,0 +1,156 @@
+@import '../utils/variables.scss';
+
+.tabla {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6.558px;
+    max-width: 1388px;
+}
+
+
+.subtablas {
+    display: flex;
+    padding: 24px 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+    grid-gap: 10px 10px;
+    grid-column-gap: 10px;
+    border-spacing: 8px 0;
+}
+
+#energia {
+    display: flex;
+    padding: 13.116px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.116px;
+    min-width: 730px;
+    max-width: 730px;
+    padding-left: 0;
+
+    &>table>thead>tr>.th1 {
+        background-color: $tabla1;
+    }
+}
+
+#potencia {
+    display: flex;
+    padding: 13.116px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.116px;
+    max-width: 546px;
+    min-width: 546px;
+
+    &>table>thead>tr>.th1 {
+        background-color: $tabla1;
+    }
+}
+
+#propEnergia {
+    display: flex;
+    padding: 13.116px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.116px;
+    min-width: 730px;
+    max-width: 730px;
+    padding-left: 0;
+
+    &>table>thead>tr>.th1 {
+        background-color: $tabla2;
+    }
+}
+
+#propPotencia {
+    display: flex;
+    padding: 13.116px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.116px;
+    max-width: 546px;
+    min-width: 546px;
+
+    &>table>thead>tr>.th1 {
+        background-color: $tabla2;
+    }
+}
+
+.tituloTabla {
+    color: $red;
+    text-align: center;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 30px;
+}
+
+
+#compañia {
+    display: flex;
+    width: 150px;
+    height: 96px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: $white;
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+    margin: 36px 0;
+}
+
+.compañia {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: start;
+    width: 500px;
+    align-items: center;
+}
+
+h2 {
+    color: $bold;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    margin-left: 20px;
+}
+
+.th1 {
+    height: 130px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: var(--common-surface-default, $white);
+    max-width: 70px;
+    min-width: 70px;
+    color: $text;
+}
+
+
+
+tbody {
+    grid-column-gap: 10px;
+    display: contents;
+}
+
+td {
+    max-width: 70px;
+    min-width: 70px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: $cell;
+    height: 20px;
+    color: $text;
+}
+
+input {
+    border: none;
+    background: $cell;
+    max-width: 70px;
+    color: $text;
+}

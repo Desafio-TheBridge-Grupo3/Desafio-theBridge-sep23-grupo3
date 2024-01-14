@@ -1,0 +1,25 @@
+@import '../utils/variables.scss';
+
+.hidden {
+        visibility: hidden;
+}
+
+.spare {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        border-radius: 18px;
+}
+
+.white {
+        background-color: $white;
+}
+
+.franja{
+        display: flex;
+        padding: 13.116px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 13.116px;
+}
