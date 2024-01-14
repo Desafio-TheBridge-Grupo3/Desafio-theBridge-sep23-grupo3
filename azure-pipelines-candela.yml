@@ -48,22 +48,13 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'conexion-azure-cloud'
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az login
-          az acr login --name $(containerRegistry)
-
     - task: AzureContainerApps@1
       displayName: Update Container App
       inputs:
         azureSubscription: $(azureSubscription)
         location: europewest
         acrName: $(containerRegistry)
-        imageToDeploy: $(imageRepository):$(tag)
+        imageToDeploy: $(imageRepository):87
         resourceGroup: $(resourceGroup)
         containerAppEnvironment: $(containerAppEnvironment)
         containerAppName: $(containerAppName)
