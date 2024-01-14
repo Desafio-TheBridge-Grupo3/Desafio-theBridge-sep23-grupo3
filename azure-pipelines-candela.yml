@@ -17,7 +17,8 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '0d416464-35e8-4787-88ca-35e7175ef60b'
   imageRepository: 'candelawebscraping'
-  containerRegistry: 'contenedoresdesafiotripulacionesg3.azurecr.io'
+  registryname: 'contenedoresdesafiotripulacionesg3'
+  containerRegistry: '$(registryname).azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/WS-candela/Dockerfile'
   tag: '$(Build.BuildId)'
 
@@ -53,7 +54,7 @@ stages:
       inputs:
         azureSubscription: $(azureSubscription)
         location: europewest
-        acrName: $(containerRegistry)
+        acrName: $(registryname)
         imageToDeploy: $(imageRepository):$(tag)
         resourceGroup: $(resourceGroup)
         containerAppEnvironment: $(containerAppEnvironment)
