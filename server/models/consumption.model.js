@@ -2,19 +2,20 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Consumption = db.define(
-  "Consumption",
+  "consumption",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     code: {
         field: "code",
         type: DataTypes.STRING(2),
-        allowNull: true,
+        allowNull: false,
     },
     con_P1: {
         field: "con_P1",
@@ -90,7 +91,7 @@ const Consumption = db.define(
   {
     db,
     modelName: "Consumption",
-    tableName: "Consumption",
+    tableName: "consumption",
     timestamps: false,
   }
 );

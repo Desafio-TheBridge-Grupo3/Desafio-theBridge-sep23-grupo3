@@ -6,14 +6,14 @@ const Advisor = require("../../models/advisor.model");
 
 const login = async (req, res) => {
   try {
-    const user = req.body.user || "";
+    const username = req.body.username || "";
     const email = req.body.email || "";
     const password = req.body.password || "";
-    if ((user || email) && password) {
+    if ((username || email) && password) {
       let advisor = await Advisor.findOne({
         where: {
           [op.or]: {
-            user: user,
+            username: username,
             email: email,
           },
         },
@@ -21,7 +21,7 @@ const login = async (req, res) => {
       if (!advisor) {
         res
           .status(400)
-          .json({ success: false, message: "Wrong email/user or password." });
+          .json({ success: false, message: "Wrong email/username or password." });
       } else {
         const success = await advisor.validPassword(
           password,
@@ -45,7 +45,7 @@ const login = async (req, res) => {
         }
       }
     } else {
-        res.status(400).json({success: false, message: 'Introduce email or user.'})
+        res.status(400).json({success: false, message: 'Introduce email or username.'})
     }
   } catch (error) {
     res.status(400).json({ message: `ERROR: ${error.stack}` });

@@ -2,18 +2,19 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Address = db.define(
-  "Address",
+  "address",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     name: {
         field: "name",
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: true,
     },
     cp: {
@@ -23,12 +24,12 @@ const Address = db.define(
     },
     province: {
         field: "province",
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(50),
         allowNull: true,
     },
     city: {
         field: "city",
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(50),
         allowNull: true,
     },
     address_type: {
@@ -45,7 +46,7 @@ const Address = db.define(
   {
     db,
     modelName: "Address",
-    tableName: "Address",
+    tableName: "address",
     timestamps: false,
   }
 );

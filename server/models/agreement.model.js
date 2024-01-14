@@ -2,20 +2,20 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Agreement = db.define(
-  "Agreement",
+  "agreement",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     cups20: {
         field: "cups20",
         type: DataTypes.STRING(20),
         allowNull: false,
-        unique: true,
     },
     consumption: {
         field: "consumption",
@@ -26,7 +26,6 @@ const Agreement = db.define(
         field: "cnae",
         type: DataTypes.STRING(30),
         allowNull: false,
-        unique: true,
     },
     electric_meter: {
         field: "electric_meter",
@@ -41,8 +40,7 @@ const Agreement = db.define(
     cau: {
         field: "cau",
         type: DataTypes.STRING(30),
-        allowNull: false,
-        unique: true,
+        allowNull: true,
     },
     id_address: {
         field: "id_address",
@@ -63,7 +61,7 @@ const Agreement = db.define(
   {
     db,
     modelName: "Agreement",
-    tableName: "Agreement",
+    tableName: "agreement",
     timestamps: false,
   }
 );

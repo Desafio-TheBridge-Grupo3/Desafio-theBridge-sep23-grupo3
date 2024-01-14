@@ -1,8 +1,6 @@
 const CIA_Client = require("../models/ciaClient.model");
 const Price = require("../models/price.model");
 
-CIA_Client.hasOne(Price, { foreignKey: "id" });
-
 const getCIAClient = async (req, res) => {
   try {
     let client = await CIA_Client.findOne({

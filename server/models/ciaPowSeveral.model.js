@@ -1,34 +1,35 @@
 const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
-const CIA_Several = db.define(
-  "CIA_Several",
+const CIA_pow_several = db.define(
+  "cia_pow_several",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     cia: {
       field: "cia",
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     zone: {
       field: "zone",
       type: DataTypes.STRING(1),
-      allowNull: true,
+      allowNull: false,
     },
     rate: {
       field: "rate",
       type: DataTypes.STRING(5),
-      allowNull: true,
+      allowNull: false,
     },
     product_cia: {
       field: "product_cia",
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     market: {
@@ -69,12 +70,12 @@ const CIA_Several = db.define(
   },
   {
     db,
-    modelName: "CIA_Several",
-    tableName: "CIA_Several",
+    modelName: "CIA_pow_several",
+    tableName: "cia_pow_several",
     timestamps: false,
   }
 );
 
-CIA_Several.sync();
+CIA_pow_several.sync();
 
-module.exports = CIA_Several;
+module.exports = CIA_pow_several;

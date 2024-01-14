@@ -2,18 +2,19 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Client_ERP = db.define(
-  "Client_ERP",
+  "client_erp",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     name: {
       field: "name",
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     id_address: {
@@ -30,10 +31,10 @@ const Client_ERP = db.define(
   {
     db,
     modelName: "Client_ERP",
-    tableName: "Client_ERP",
+    tableName: "client_erp",
     timestamps: true,
     createdAt: false,
-    updatedAt: "date_last_modified",
+    updatedAt: "date_last_modify",
   }
 );
 

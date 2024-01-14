@@ -2,18 +2,19 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const CIA_Client = db.define(
-  "CIA_Client",
+  "cia_client",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     name: {
         field: "name",
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: true,
     },
     issue_date: {
@@ -49,20 +50,15 @@ const CIA_Client = db.define(
     iva: {
         field: "iva",
         type: DataTypes.FLOAT,
-        allowNull: true,
-    },
-    consumme_sips: {
-        field: "consumme_sips",
-        type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
     },
     tax: {
         field: "tax",
         type: DataTypes.FLOAT,
         allowNull: true,
     },
-    other_taxes: {
-        field: "other_taxes",
+    other_tax: {
+        field: "other_tax",
         type: DataTypes.FLOAT,
         allowNull: true,
     },
@@ -80,7 +76,7 @@ const CIA_Client = db.define(
   {
     db,
     modelName: "CIA_Client",
-    tableName: "CIA_Client",
+    tableName: "cia_client",
     timestamps: false,
   }
 );

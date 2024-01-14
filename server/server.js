@@ -7,6 +7,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('./config/jwt.config')(passport);
 require('dotenv').config();
+require('./models/associations');
 
 const app = express()
 const port = process.env.PORT || 3000;

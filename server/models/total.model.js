@@ -1,20 +1,21 @@
 const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
-const Total = db.define(
-  "Total",
+const Total_consumption = db.define(
+  "total_consumption",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     type_code: {
         field: "type_code",
         type: DataTypes.STRING(2),
-        allowNull: true,
+        allowNull: false,
     },
     result_con_P1: {
         field: "result_con_P1",
@@ -84,12 +85,12 @@ const Total = db.define(
   },
   {
     db,
-    modelName: "Total",
-    tableName: "Total",
+    modelName: "Total_consumption",
+    tableName: "total_consumption",
     timestamps: false,
   }
 );
 
-Total.sync();
+Total_consumption.sync();
 
-module.exports = Total;
+module.exports = Total_consumption;

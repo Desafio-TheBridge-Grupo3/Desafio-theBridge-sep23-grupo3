@@ -2,23 +2,24 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Proposal = db.define(
-  "Proposal",
+  "proposal",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     type: {
         field: "type",
-        type: DataTypes.STRING(1),
-        allowNull: true,
+        type: DataTypes.STRING(2),
+        allowNull: false,
     },
     concept: {
         field: "concept",
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: true,
     },
     date: {
@@ -28,7 +29,7 @@ const Proposal = db.define(
     },
     savings: {
       field: "savings",
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: true,
     },
     percent_savings: {
@@ -50,7 +51,7 @@ const Proposal = db.define(
   {
     db,
     modelName: "Proposal",
-    tableName: "Proposal",
+    tableName: "proposal",
     timestamps: false,
   }
 );

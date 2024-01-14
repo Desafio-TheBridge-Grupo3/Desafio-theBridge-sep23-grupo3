@@ -2,13 +2,14 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Price = db.define(
-  "Price",
+  "price",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     con_P1: {
@@ -75,7 +76,7 @@ const Price = db.define(
   {
     db,
     modelName: "Price",
-    tableName: "Price",
+    tableName: "price",
     timestamps: false,
   }
 );

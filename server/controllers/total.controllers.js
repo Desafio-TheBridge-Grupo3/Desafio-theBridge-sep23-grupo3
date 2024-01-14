@@ -1,15 +1,11 @@
-const Total = require("../models/total.model");
+const Total_consumption = require("../models/total.model");
 const Consumption = require("../models/consumption.model");
 const CIA_Client = require("../models/ciaClient.model");
 const Price = require("../models/price.model");
 
-CIA_Client.hasOne(Price, { foreignKey: "id" });
-Consumption.hasOne(CIA_Client, { foreignKey: "id" });
-Total.hasOne(Consumption, { foreignKey: "id" });
-
 const getTotal = async (req, res) => {
   try {
-    let total = await Total.findOne({
+    let total = await Total_consumption.findOne({
       where: { id: req.params.id },
       attributes: {
         exclude: ["id", "id_consumption"],
@@ -67,7 +63,7 @@ const createTotal = async (req, res) => {
     const cons = await Consumption.create(consData);
     let totalData = req.body.total;
     totalData.id_consumption = cons.dataValues.id;
-    const total = await Total.create(totalData);
+    const total = await Total_consumption.create(totalData);
     res.status(201).json({success: true, total: total.dataValues});
   } catch (error) {
     res.status(400).json({ message: `ERROR: ${error.stack}` });
@@ -76,7 +72,7 @@ const createTotal = async (req, res) => {
 
 const deleteTotal = async (req, res) => {
   try {
-    const total = await Total.findOne({where: {id: req.body.id}});
+    const total = await Total_consumption.findOne({where: {id: req.body.id}});
     if (!total) {
         res.status(404).json({success: false, message: `Total with id ${req.body.id} does not exist.`})
     } else {

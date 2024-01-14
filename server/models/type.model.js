@@ -2,13 +2,14 @@ const { db } = require("../config/sqlConnection");
 const { DataTypes } = require("sequelize");
 
 const Type_proposal = db.define(
-  "Type_proposal",
+  "type_proposal",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     id_consumption: {
@@ -25,7 +26,7 @@ const Type_proposal = db.define(
   {
     db,
     modelName: "Type_proposal",
-    tableName: "Type_proposal",
+    tableName: "type_proposal",
     timestamps: false,
   }
 );

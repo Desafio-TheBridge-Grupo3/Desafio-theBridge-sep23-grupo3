@@ -6,42 +6,6 @@ const CIA_Client = require("../models/ciaClient.model");
 const Client_ERP = require("../models/clientERP.model");
 const Price = require("../models/price.model");
 
-Proposal.hasOne(Agreement, {
-  foreignKey: "id",
-  sourceKey: "id_agreement",
-  as: "agreement",
-});
-Agreement.hasOne(Address, {
-  foreignKey: "id",
-  sourceKey: "id_address",
-  as: "address",
-});
-Agreement.hasOne(Client_ERP, {
-  foreignKey: "id",
-  sourceKey: "id_client_erp",
-  as: "client_erp",
-});
-Agreement.hasOne(CIA_Client, {
-  foreignKey: "id",
-  sourceKey: "id_cia_client",
-  as: "cia_client",
-});
-CIA_Client.hasOne(Price, {
-  foreignKey: "id",
-  sourceKey: "id_price",
-  as: "price",
-});
-Client_ERP.hasOne(Address, {
-  foreignKey: "id",
-  sourceKey: "id_address",
-  as: "address",
-});
-Client_ERP.hasOne(Advisor, {
-  foreignKey: "id",
-  sourceKey: "id_advisor",
-  as: "advisor",
-});
-
 const getProposal = async (req, res) => {
   try {
     // Query in db of Proposal
@@ -64,7 +28,7 @@ const getProposal = async (req, res) => {
     if (!proposal) {
       res.status(404).json({
         success: false,
-        message: `Proposal with id ${req.body.id} does not exist.`,
+        message: `Proposal with id ${req.params.id} does not exist.`,
       });
     } else {
       // Proposal object cleaning
@@ -115,11 +79,11 @@ const getProposal = async (req, res) => {
       } else {
         // Client ERP object cleaning
         client_erp = client_erp.dataValues;
-        client_erp.date_last_modified = new Date(
-          client_erp.date_last_modified
+        client_erp.date_last_modify = new Date(
+          client_erp.date_last_modify
         ).toLocaleString();
-        client_erp.Address = client_erp.address.dataValues;
-        client_erp.Advisor = client_erp.advisor.dataValues;
+        client_erp.address = client_erp.address.dataValues;
+        client_erp.advisor = client_erp.advisor.dataValues;
         proposal.client_erp = client_erp; // Adds Client ERP as a key inside Proposal
         delete proposal.agreement.id_client_erp;
       }
@@ -198,6 +162,7 @@ const getAllProposals = async (req, res) => {
         let obj = p.dataValues;
         obj.date = new Date(p.date).toLocaleString();
         obj.agreement = p.agreement.dataValues;
+        delete obj.id;
         return obj;
       });
 
@@ -220,7 +185,7 @@ const getAllProposals = async (req, res) => {
           {
             model: Address,
             as: "address",
-            required: true,
+            required: false,
             attributes: {
               exclude: ["id"],
             },
@@ -228,7 +193,7 @@ const getAllProposals = async (req, res) => {
           {
             model: Advisor,
             as: "advisor",
-            required: true,
+            required: false,
             attributes: {
               exclude: ["id", "password", "role"],
             },
@@ -247,8 +212,8 @@ const getAllProposals = async (req, res) => {
         // Client ERP object cleaning
         client_erp = client_erp.map((c) => {
           let obj = c.dataValues;
-          obj.date_last_modified = new Date(
-            c.date_last_modified
+          obj.date_last_modify = new Date(
+            c.date_last_modify
           ).toLocaleString();
           obj.address = obj.address.dataValues;
           obj.advisor = obj.advisor.dataValues;
@@ -309,7 +274,7 @@ const getAllProposals = async (req, res) => {
       }
 
       // Response with data
-      res.status(200).json({ success: true, data: proposal });
+      res.status(200).json({ success: true, count: proposal.length, data: proposal });
     }
   } catch (error) {
     res.status(400).json({ message: `ERROR: ${error.stack}` });
@@ -333,26 +298,63 @@ const createProposal = async (req, res) => {
     });
 
     // Price and CIA Client creation
-    const price = await Price.create(req.body.price);
+    let price = await Price.create(req.body.price);
     cia_client.id_price = price.dataValues.id;
-    const cia_client_ref = await CIA_Client.create(cia_client);
+    let cia_client_ref = await CIA_Client.create(cia_client);
 
     // Address and Client_ERP creation
-    const erpAddress = await Address.create(req.body.erpAddress);
+    let erpAddress = await Address.create(req.body.erpAddress);
     client_erp.id_address = erpAddress.dataValues.id;
     client_erp.id_advisor = advisor.dataValues.id;
-    const client_erp_ref = await Client_ERP.create(client_erp);
+    let client_erp_ref = await Client_ERP.create(client_erp);
 
     // Agreement and Proposal creation
-    const agreementAddress = await Address.create(req.body.agreementAddress);
+    let agreementAddress = await Address.create(req.body.agreementAddress);
     agreement.id_address = agreementAddress.dataValues.id;
     agreement.id_client_erp = client_erp_ref.dataValues.id;
     agreement.id_cia_client = cia_client_ref.dataValues.id;
-    const agreement_ref = await Agreement.create(agreement);
+    let agreement_ref = await Agreement.create(agreement);
     proposal.id_agreement = agreement_ref.dataValues.id;
-    const proposal_ref = await Proposal.create(proposal);
+    let proposal_ref = await Proposal.create(proposal);
 
-    res.status(201).json({ success: true, data: proposal_ref.dataValues });
+    // Response data
+    cia_client_ref = cia_client_ref.dataValues;
+    cia_client_ref.issue_date = new Date(cia_client_ref.issue_date).toLocaleString();
+    cia_client_ref.start_date = new Date(cia_client_ref.start_date).toLocaleString();
+    cia_client_ref.end_date = new Date(cia_client_ref.end_date).toLocaleString();
+    cia_client_ref.price = price.dataValues;
+    delete cia_client_ref.price.id;
+    delete cia_client_ref.id_price;
+    delete cia_client_ref.id;
+
+    client_erp_ref = client_erp_ref.dataValues;
+    client_erp_ref.date_last_modify = new Date(client_erp_ref.date_last_modify).toLocaleString();
+    client_erp_ref.address = erpAddress.dataValues;
+    client_erp_ref.advisor = advisor.dataValues;
+    delete client_erp_ref.address.id;
+    delete client_erp_ref.advisor.id;
+    delete client_erp_ref.id_address;
+    delete client_erp_ref.id_advisor;
+    delete client_erp_ref.id;
+
+    agreement_ref = agreement_ref.dataValues;
+    agreement_ref.address = agreementAddress.dataValues;
+    delete agreement_ref.address.id;
+    delete agreement_ref.id_address;
+    delete agreement_ref.id_client_erp;
+    delete agreement_ref.id_cia_client;
+    delete agreement_ref.id;
+
+    proposal_ref = proposal_ref.dataValues;
+    delete proposal_ref.id_agreement;
+    delete proposal_ref.id;
+
+    const data = proposal_ref;
+    data.agreement = agreement_ref;
+    data.client_erp = client_erp_ref;
+    data.cia_client = cia_client_ref;
+
+    res.status(201).json({ success: true, data: data });
   } catch (error) {
     res.status(400).json({ message: `ERROR: ${error.stack}` });
   }

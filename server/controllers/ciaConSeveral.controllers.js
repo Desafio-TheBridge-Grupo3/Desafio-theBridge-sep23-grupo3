@@ -31,7 +31,7 @@ const getAllCiaConSeveral = async (req, res) => {
   try {
     let cia = await CIA_con_several.findAll();
     cia = cia.map(c => c.dataValues);
-    res.status(200).json({ success: true, data: cia});
+    res.status(200).json({ success: true, count: cia.length, data: cia});
   } catch (error) {
     res.status(400).json({ message: `ERROR: ${error.stack}` });
   }

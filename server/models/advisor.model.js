@@ -3,38 +3,39 @@ const { DataTypes } = require("sequelize");
 const bcrypt = require('bcrypt');
 
 const Advisor = db.define(
-  "Advisor",
+  "advisor",
   {
     id: {
       field: "id",
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
       allowNull: false,
     },
     name: {
       field: "name",
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(250),
       allowNull: true,
     },
-    user: {
-      field: "user",
-      type: DataTypes.TEXT,
-      allowNull: true,
+    username: {
+      field: "username",
+      type: DataTypes.STRING(250),
+      allowNull: false,
     },
     email: {
       field: "email",
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     password: {
       field: "password",
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
     role: {
-      field: "role",
-      type: DataTypes.STRING,
+      field: "rol",
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   },
@@ -62,7 +63,8 @@ const Advisor = db.define(
   {
     db,
     modelName: "Advisor",
-    tableName: "Advisor",
+    tableName: "advisor",
+    freezeTableName: true,
     timestamps: false,
   }
 );
