@@ -1,6 +1,6 @@
-FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
+FROM node:alpine3.18
 
-ENV APP_PORT=5173
+ENV APP_PORT=3000
 
 WORKDIR /app/server
 
