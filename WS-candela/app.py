@@ -1,18 +1,18 @@
 import json
-from flask import Flask, request, jsonify, redirect
+from werkzeug.serving import make_server
+from flask import Flask, request, jsonify
 from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from flask_cors import CORS, cross_origin
 from cerberus import Validator
 import threading
 from queue import Queue
-from werkzeug.serving import make_server
 import signal
 
 import os
-from os import environ
 import sys
 
 import ws_app
+
 
 script_dir = os.getcwd()
 my_module_path = os.path.join(script_dir, "..")
@@ -27,12 +27,21 @@ limiter = Limiter(
     app,
     default_limits=["1000 per day", "50 per hour"]
 )
+CORS(app)
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
+    response.headers.add('Access-Comtrol-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 @app.route('/', methods=['GET'])
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def home():
    return "API"
 
 @app.route('/shutdown', methods=['POST'])
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def shutdown():
     if request.method == 'POST':
         print("Deteniendo la aplicación...")
@@ -42,11 +51,16 @@ def shutdown():
         return jsonify(error="Invalid request method"), 405
 
 def ws_candela(cups):
+    try:
         info = ws_app.webscraping_chrome_candelas(cups)
         queue_info.put(info)
+    except Exception as e:
+        queue_info.put(str(e))
+
 
 @app.route('/cups20', methods=['GET'])
 @limiter.limit("10 per minute")
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def calcule_energy_consumption():
     
     schema = {
@@ -54,14 +68,13 @@ def calcule_energy_consumption():
     }
     validator = Validator(schema)
 
-    record = json.loads(request.data)
-
     try:
+        record = json.loads(request.data)
         if validator.validate(record):
-            cups = record["cups20"]
-            print(cups)
-            thread = threading.Thread(target=ws_candela, args=(cups,))
-            thread.start()
+            for c in record:
+                cups = record["cups20"]
+                thread = threading.Thread(target=ws_candela, args=(cups,))
+                thread.start()
             thread.join()
             info = queue_info.get()
             return {"info": info}
