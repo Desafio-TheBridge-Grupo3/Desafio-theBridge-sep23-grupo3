@@ -22,7 +22,7 @@ variables:
   tag: '$(Build.BuildId)'
 
   # Container Apps Variables
-  azureSubscription: 'CONTENEDORESdesafiotripulacionesG3'
+  azureSubscription: 'conexion-azure-cloud'
   resourceGroup: 'RECURSOS-desafiotripulacionesG3'
   containerAppEnvironment: 'env-container-app-desafiotripulacionesg3'
   containerAppName: 'ws-candela-calculadora-several'
