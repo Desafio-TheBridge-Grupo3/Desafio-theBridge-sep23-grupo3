@@ -1,0 +1,10 @@
+URL: "https://ws-candela-calculadora-several.thankfulgrass-02544078.westeurope.azurecontainerapps.io/cups20"
+
+{"cups20": }
+
+url-candela="https://agentes.candelaenergia.es/#/login"
+user-candela="CA001507"
+password-candela="CI001-507/258071"
+
+JUAN_CUPS="ES0021000004658542DG"
+JAVI_CUPS="ES0022000006250162PZ1P"
