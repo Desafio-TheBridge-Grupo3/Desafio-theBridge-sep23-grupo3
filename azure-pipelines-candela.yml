@@ -53,6 +53,7 @@ stages:
       displayName: Update Container App
       inputs:
         azureSubscription: $(azureSubscription)
+        location: europewest
         acrName: $(containerRegistry)
         imageToDeploy: $(imageRepository):$(tag)
         resourceGroup: $(resourceGroup)
