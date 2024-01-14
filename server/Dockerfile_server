@@ -1,9 +1,6 @@
 FROM contenedoresdesafiotripulacionesg3.azurecr.io/alpinesecuredesafio:latest
 
-ENV APP_PORT=5173 \
-    SQL_HOST="database-desafio-grupo3.postgres.database.azure.com" \
-    SQL_USER="grupo3desafio" \
-    SQL_DATABASE="proyectoTribu"
+ENV APP_PORT=5173
 
 WORKDIR /app/server
 
@@ -13,5 +10,4 @@ RUN npm install
 
 EXPOSE $APP_PORT
 
-CMD ["sh", "-c", "psql --host=$(SQL_HOST) --port=5432 --username=$(SQL_USER) --dbname=$(SQL_DATABASE) --set=sslmode=require --set=sslrootcert=DigiCertGlobalRootCA.crt.pem && \
-                  cd .. && npm start"]
+CMD ["sh", "-c", "npm start"]
