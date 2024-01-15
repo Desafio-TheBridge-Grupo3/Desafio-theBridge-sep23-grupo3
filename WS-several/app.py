@@ -17,12 +17,12 @@ sys.path.append(my_module_path)
 os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 limiter = Limiter(
     app,
     default_limits=["1000 per day", "50 per hour"]
 )
-CORS(app)
 
 @app.after_request
 def after_request(response):

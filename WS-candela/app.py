@@ -22,12 +22,12 @@ os.chdir(os.path.dirname(__file__))
 queue_info = Queue()
 
 app = Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 limiter = Limiter(
     app,
     default_limits=["1000 per day", "50 per hour"]
 )
-CORS(app)
 
 @app.after_request
 def after_request(response):
@@ -59,8 +59,8 @@ def ws_candela(cups):
 
 
 @app.route('/cups20', methods=['GET'])
-@limiter.limit("10 per minute")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
+@limiter.limit("10 per minute")
 def calcule_energy_consumption():
     
     schema = {
