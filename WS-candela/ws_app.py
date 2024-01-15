@@ -65,7 +65,7 @@ def webscraping_chrome_candelas(cups):
     driver.find_element(By.NAME, "usuario").send_keys(USER)
     driver.find_element(By.NAME, "password").send_keys(PASSWORD)
     driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form/button').click()
-    time.sleep(3)
+    time.sleep(5)
 
     # Download info
 
