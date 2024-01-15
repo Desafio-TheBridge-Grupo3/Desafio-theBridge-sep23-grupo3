@@ -20,6 +20,8 @@ RUN chmod 777 chromedriver-linux64/chromedriver
 
 RUN cp chromedriver-linux64/chromedriver /usr/local/bin/
 
+EXPOSE 5000
+
 # install packages in requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
