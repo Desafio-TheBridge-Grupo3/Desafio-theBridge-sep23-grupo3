@@ -86,7 +86,7 @@ RUN rm -fr /root
 RUN rm -f /etc/fstab
 
 # Remove any symlinks that we broke during previous steps
-RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} ; -delete
+RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 
 # add-in post installation file for permissions
 COPY post-install.sh /home/app/
