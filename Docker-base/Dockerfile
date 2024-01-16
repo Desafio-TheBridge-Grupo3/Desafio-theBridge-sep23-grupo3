@@ -60,7 +60,7 @@ RUN find /bin /etc /lib /sbin /usr -xdev -type d \
     -exec chmod 0755 {} \;
 
 # Remove suid & sgid files
-RUN find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm +4000 -o -perm +2000 ) -delete
+RUN find /bin /etc /lib /sbin /usr -xdev -type f -a \( -perm +4000 -o -perm +2000 \) -delete
 
 # Remove dangerous commands
 RUN find /bin /etc /lib /sbin /usr -xdev \( \
