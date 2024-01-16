@@ -100,7 +100,7 @@ RUN chmod 500 $APP_DIR/post-install.sh
 # default directory is /app
 WORKDIR $APP_DIR
 
-RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
+RUN apk update && apk add nodejs=20.10.0 && apk add npm
 
 RUN apk add postgresql-client
 

@@ -25,8 +25,8 @@ variables:
   # Container Apps Variables
   azureSubscription: 'conexion-azure-cloud'
   resourceGroup: 'RECURSOS-desafiotripulacionesG3'
-  containerAppEnvironment: 'env-container-app-desafiotripulacionesg3'
-  containerAppName: 'ws-invoice-calculadora-several'
+  containerAppEnvironment: 'env-container-apps-dev'
+  containerAppName: 'ws-invoice-dev'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
