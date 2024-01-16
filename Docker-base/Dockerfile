@@ -18,6 +18,8 @@ ENV DATA_DIR "$APP_DIR/data"
 # Where configuration should be stored
 ENV CONF_DIR "$APP_DIR/conf"
 
+USER root 
+
 # Update base system
 # hadolint ignore=DL3018
 RUN apk add --no-cache ca-certificates
