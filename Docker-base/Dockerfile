@@ -29,6 +29,8 @@ RUN adduser -s /bin/true -u 1000 -D -h $APP_DIR $APP_USER \
   && chmod 700 "$APP_DIR" "$DATA_DIR" "$CONF_DIR"
 
 
+USER root
+
 # Instalar node
 RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
 
