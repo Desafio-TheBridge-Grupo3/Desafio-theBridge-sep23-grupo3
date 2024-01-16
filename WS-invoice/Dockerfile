@@ -10,7 +10,7 @@ COPY . .
 
 EXPOSE 5001
 
-RUN apt-get update && apt-get install -y gcc python3-dev
+RUN apk update && apk add -y gcc python3-dev
 
 # install packages in requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
