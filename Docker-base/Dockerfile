@@ -12,7 +12,7 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
 # The user the app should run as
 ENV APP_USER=app
 # The home directory
-ENV APP_DIR="/home/$APP_USER"
+ENV APP_DIR="/$APP_USER"
 # Where persistent data (volume) should be stored
 ENV DATA_DIR "$APP_DIR/data"
 # Where configuration should be stored
