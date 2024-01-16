@@ -28,6 +28,13 @@ RUN adduser -s /bin/true -u 1000 -D -h $APP_DIR $APP_USER \
   && chown -R "$APP_USER" "$APP_DIR" "$CONF_DIR" \
   && chmod 700 "$APP_DIR" "$DATA_DIR" "$CONF_DIR"
 
+
+# Instalar node
+RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
+
+# Instalar postgresql-client
+RUN apk add postgresql-client
+
 RUN su $APP_USER
 
 # Remove existing crontabs, if any.
@@ -99,9 +106,5 @@ RUN chmod 500 $APP_DIR/post-install.sh
 
 # default directory is /app
 WORKDIR $APP_DIR
-
-RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
-
-RUN apk add postgresql-client
 
 RUN ./post-install.sh
