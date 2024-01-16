@@ -1,11 +1,6 @@
-import json
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_limiter import Limiter
 from flask_cors import CORS, cross_origin
-import signal
-import threading
-from queue import Queue
-from cerberus import Validator
 from werkzeug.serving import make_server
 
 import os
