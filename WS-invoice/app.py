@@ -2,14 +2,19 @@ import json
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_cors import CORS, cross_origin
-import signal
-import threading
-from queue import Queue
 from cerberus import Validator
+import requests
 from werkzeug.serving import make_server
 
 import os
+from os import environ
+import sys
 import functions
+
+script_dir = os.getcwd()
+my_module_path = os.path.join(script_dir, ".")
+sys.path.append(my_module_path)
+os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
 CORS(app)
@@ -21,47 +26,64 @@ limiter = Limiter(
 
 @app.after_request
 def after_request(response):
+    """
+    A decorator to add headers to the HTTP response for enabling Cross-Origin Resource Sharing (CORS).
+    Args:
+        response (object): The HTTP response object.
+
+    Returns:
+        object: The modified HTTP response object.
+    """
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+
 @app.route('/', methods=['GET'])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def home():
-   return "API Extract Data Invoice"
+   return "API ws-several"
 
-    
-@app.route('/invoice', methods=['POST'])
+@app.route('/filter_several', methods=['GET'])
+@limiter.limit("100 per minute")
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
-def load_pdf():    
-
-    file = request.files['file_data']
-
-    name_file = file.filename
-    _, extension = os.path.splitext(name_file)
-
-    if extension.lower() == ".pdf":
-
-        pdf_data_base64 = request.files['file_data']
-        response = functions.upload_pdf(pdf_data_base64)
-
-    elif extension.lower() == ".png" or extension.lower() == ".jpeg" or extension.lower() == ".jpg":
-        img_file = request.files['file_data']
-        response = functions.image_to_text(img_file)
-
-    if response:
+def filter_info():
+    """
+    Receives a configuration as a JSON payload and filters the database based on the provided criteria.
     
-        link_cnmc = functions.extract_link()
-        if link_cnmc:
-            info_cnmc = functions.extract_info_ws_cnvm(link_cnmc)
-            info_cnmc["cups20"] = functions.extract_cups(link_cnmc)
+    The function validates the input configuration against a predefined JSON schema and,
+    if the validation passes, it establishes a connection to the database using the
+    'my_connection' function from the 'functions' module. It then calls the 'con_filter_info'
+    function to perform the actual filtering in the database and retrieve the prices of tariffs.
+    
+    Args:
+        None (uses request.data): JSON payload containing the filter configuration.
 
-        prizes = functions.prizes_invoice()
-        all_info = {"info_cnmc": info_cnmc,
-                    "days_rating": functions.extract_days(),
-                    "prizes": prizes}
+    Returns:
+        dict: A JSON response containing the filtered information or an error message.
+    """
+    schema = {
+    'cia': {'type': 'string', 'minlength': 1, 'maxlength': 100},
+    'zone': {'type': 'string', 'minlength': 1, 'maxlength': 50},
+    'rate': {'type': 'string', 'minlength': 1, 'maxlength': 10},
+    'indexed_date': {'type': 'string', 'minlength': 1, 'maxlength': 100},
+    'fee': {'type': 'string', 'minlength': 1, 'maxlength': 100},
+    'product_cia': {'type': 'string', 'minlength': 1, 'maxlength': 100},
+    'market': {'type': 'string', 'minlength': 1, 'maxlength':10},
+    }
+    validator = Validator(schema)
 
-    return {"info": all_info}
+    try:
+        record = json.loads(request.data)
+        if validator.validate(record):
+            connection = functions.my_connection()
+            response = functions.con_filter_info(connection, record)
+
+            return {"response": response}
+
+    except requests.exceptions.RequestException as e:
+        return {'error': str(e)}
+    
 if __name__ == '__main__':
-  server = make_server('0.0.0.0', 5001, app)
+  server = make_server('0.0.0.0', 5002, app)
   server.serve_forever()
