@@ -7,7 +7,7 @@ RUN echo "https://alpine.global.ssl.fastly.net/alpine/v$(cut -d . -f 1,2 < /etc/
 # The user the app should run as
 ENV APP_USER=app
 # The home directory
-ENV APP_DIR="/$APP_USER"
+ENV APP_DIR="/home/$APP_USER"
 # Where persistent data (volume) should be stored
 ENV DATA_DIR "$APP_DIR/data"
 # Where configuration should be stored
@@ -88,13 +88,13 @@ RUN rm -f /etc/fstab
 # Remove any symlinks that we broke during previous steps
 RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 
-RUN chmod 500 /home/app/post-install.sh
+RUN chmod 500 $(APP_DIR)/post-install.sh
 
 # default directory is /app
-WORKDIR /home/app
+WORKDIR $(APP_DIR)
 
 # add-in post installation file for permissions
-COPY post-install.sh $(WORKDIR)
+COPY post-install.sh $(APP_DIR)
 
 # Instala node y npm
 RUN apk update 
