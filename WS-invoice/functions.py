@@ -1,18 +1,7 @@
 import cv2 as cv
 import easyocr
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-
 import fitz
-from langchain.chains import AnalyzeDocumentChain
-from langchain.chat_models import ChatOpenAI
-from langchain.chains.question_answering import load_qa_chain
-
-import time
 import re
-import copy
 from dotenv import load_dotenv
 import os
 import pandas as pd
@@ -24,12 +13,6 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 p_counter_kW=0
 p_counter_kWh=0
 
-def create_qa_chain(): 
-    llm = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=OPENAI_API_KEY)
-    qa_chain = load_qa_chain(llm, chain_type="map_reduce")
-    qa_document_chain = AnalyzeDocumentChain(combine_docs_chain=qa_chain)
-
-    return qa_document_chain
 
 def extract_text_from_pdf(pdf):
     """
@@ -80,57 +63,6 @@ def save_text_to_txt(text, txt_path):
             print(f'Error al guardar el archivo: {e}')
     else:
         print(f'La ruta especificada no existe: {os.path.dirname(txt_path)}')
-
-def response_question_langchain(qa_document_chain, question):
-    """
-    Get responses to a question from a question-answering document chain.
-
-    Args:
-        qa_document_chain (AnalyzeDocumentChain): Question-answering document chain.
-        question (str): The question to be answered.
-
-    Returns:
-        dict: A dictionary containing the question, responses, and any errors.
-    """
-    fragment_size = 4096
-    all_responses= {"question": [],"response" : [], "error": []}
-    with open("data/txt/invoice.txt", 'r', encoding='utf-8') as file:
-        while True:
-            part = file.read(fragment_size)
-            if not part:
-                break
-            try:
-                response = qa_document_chain.run(
-                    input_document=part,
-                    question=question,
-                )
-                all_responses["question"].append(question)
-                all_responses["response"].append(response)
-            except Exception as e:
-                all_responses["error"].append(str(e))
-    all_responses["question"] = all_responses["question"][0]
-    return all_responses
-
-def invoice_clean_data(response):
-    """
-    Clean and process responses obtained from a question-answering task.
-
-    Args:
-        response (dict): Original responses containing question, responses, and errors.
-
-    Returns:
-        dict: Cleaned responses with irrelevant answers replaced and numeric values extracted.
-    """
-    clean_response = copy.deepcopy(response)
-    float_patron = r'\b\d+[.,]\d+\b'
-    not_answer = ["lo siento","no se", "no puedo", "no se menciona"]
-    for i,r in enumerate(response["response"]):
-        if any(word.lower() in r.lower() for word in not_answer):
-            clean_response["response"][i] = " "
-        else:
-            result = re.findall(float_patron,r)
-            clean_response["response"][i] = result
-    return clean_response
 
 def upload_pdf(pdf_data):
     """

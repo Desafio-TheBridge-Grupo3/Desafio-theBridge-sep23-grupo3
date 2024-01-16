@@ -2,19 +2,14 @@ import json
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_cors import CORS, cross_origin
+import signal
+import threading
+from queue import Queue
 from cerberus import Validator
-import requests
 from werkzeug.serving import make_server
 
 import os
-from os import environ
-import sys
 import functions
-
-script_dir = os.getcwd()
-my_module_path = os.path.join(script_dir, ".")
-sys.path.append(my_module_path)
-os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
 CORS(app)
@@ -38,52 +33,58 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
-
 @app.route('/', methods=['GET'])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def home():
-   return "API ws-several"
+   return "API Extract Data Invoice"
 
-@app.route('/filter_several', methods=['GET'])
-@limiter.limit("100 per minute")
+    
+@app.route('/invoice', methods=['POST'])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
-def filter_info():
+def load_pdf():    
     """
-    Receives a configuration as a JSON payload and filters the database based on the provided criteria.
-    
-    The function validates the input configuration against a predefined JSON schema and,
-    if the validation passes, it establishes a connection to the database using the
-    'my_connection' function from the 'functions' module. It then calls the 'con_filter_info'
-    function to perform the actual filtering in the database and retrieve the prices of tariffs.
-    
-    Args:
-        None (uses request.data): JSON payload containing the filter configuration.
+    Endpoint for processing and extracting information from PDF or image files.
 
     Returns:
-        dict: A JSON response containing the filtered information or an error message.
+        dict: JSON response containing extracted information from the uploaded file.
     """
-    schema = {
-    'cia': {'type': 'string', 'minlength': 1, 'maxlength': 100},
-    'zone': {'type': 'string', 'minlength': 1, 'maxlength': 50},
-    'rate': {'type': 'string', 'minlength': 1, 'maxlength': 10},
-    'indexed_date': {'type': 'string', 'minlength': 1, 'maxlength': 100},
-    'fee': {'type': 'string', 'minlength': 1, 'maxlength': 100},
-    'product_cia': {'type': 'string', 'minlength': 1, 'maxlength': 100},
-    'market': {'type': 'string', 'minlength': 1, 'maxlength':10},
-    }
-    validator = Validator(schema)
+    file = request.files['file_data']
+    info_link = {}
 
-    try:
-        record = json.loads(request.data)
-        if validator.validate(record):
-            connection = functions.my_connection()
-            response = functions.con_filter_info(connection, record)
+    name_file = file.filename
+    _, extension = os.path.splitext(name_file)
 
-            return {"response": response}
+    if extension.lower() == ".pdf":
 
-    except requests.exceptions.RequestException as e:
-        return {'error': str(e)}
+        pdf_data_base64 = request.files['file_data']
+        response = functions.upload_pdf(pdf_data_base64)
+
+    elif extension.lower() == ".png" or extension.lower() == ".jpeg" or extension.lower() == ".jpg":
+        img_file = request.files['file_data']
+        response = functions.image_to_text(img_file)
+
+    if response:
     
+        link_cnmc = functions.extract_link()
+        if link_cnmc:
+            info_link = functions.extract_link_info(link_cnmc)
+        
+        measured,cleaned_matches = functions.prices_invoice()
+        df = functions.df_create(measured, cleaned_matches)
+        df['P_values'] = df.apply(functions.assign_p_values, axis=1)
+        price = functions.json_prices(df)
+        functions.p_counter_kW=0
+        functions.p_counter_kWh=0
+
+    if info_link:
+        all_info = {"info_cnmc": info_link,
+                    "prices": price}
+        
+    else:
+        all_info = {"info_cnmc": "",
+                    "prices": price}
+
+    return {"info": all_info}
 if __name__ == '__main__':
-  server = make_server('0.0.0.0', 5001, app)
+  server = make_server('127.0.0.1', 5001, app)
   server.serve_forever()
