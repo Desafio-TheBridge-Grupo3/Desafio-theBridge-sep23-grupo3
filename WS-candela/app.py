@@ -59,7 +59,7 @@ def ws_candela(cups):
         queue_info.put(str(e))
 
 
-@app.route('/cups20', methods=['GET'])
+@app.route('/cups20', methods=['POST'])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 @limiter.limit("10 per minute")
 def calcule_energy_consumption():
