@@ -88,18 +88,18 @@ RUN rm -f /etc/fstab
 # Remove any symlinks that we broke during previous steps
 RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 
-RUN chmod 500 $(APP_DIR)/post-install.sh
-
 # default directory is /app
 WORKDIR $(APP_DIR)
 
 # add-in post installation file for permissions
 COPY post-install.sh $(APP_DIR)
 
+RUN chmod 500 post-install.sh
+
 # Instala node y npm
 RUN apk update 
 
-RUN apk add nodejs=20.11.0-r0
+RUN apk add nodejs=20.9.0
 
 RUN apk add npm
 
