@@ -22,3 +22,19 @@
     description = "Contraseña del usuario admin de la base de datos"
     type = string
   }
+
+  variable "SESSION_SECRET" {
+    type = string
+  }
+
+  variable "JWT_SECRET" {
+   type = string 
+  }
+
+  variable "USER_CANDELA" {
+    type = string
+  }
+
+  variable "PWD_CANDELA" {
+    type = string
+  }
