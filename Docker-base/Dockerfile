@@ -97,8 +97,6 @@ COPY post-install.sh /home/app
 RUN chmod 500 /home/app/post-install.sh
 
 # Instala node y npm
-RUN apk update 
-
 RUN apk add nodejs=20.9.0
 
 RUN apk add npm
