@@ -1,5 +1,4 @@
 easyocr==1.7.1
-langchain==0.0.316
 PyPDF2==3.0.1
 PyMuPDF==1.23.12
 opencv-python==4.8.1.78
