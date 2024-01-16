@@ -89,12 +89,12 @@ RUN rm -f /etc/fstab
 RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 
 # default directory is /app
-WORKDIR $(APP_DIR)
+WORKDIR /home/app
 
 # add-in post installation file for permissions
-COPY post-install.sh $(APP_DIR)
+COPY post-install.sh /home/app
 
-RUN chmod 500 post-install.sh
+RUN chmod 500 /home/app/post-install.sh
 
 # Instala node y npm
 RUN apk update 
