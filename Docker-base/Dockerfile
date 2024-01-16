@@ -28,8 +28,6 @@ RUN adduser -s /bin/true -u 1000 -D -h $APP_DIR $APP_USER \
   && chown -R "$APP_USER" "$APP_DIR" "$CONF_DIR" \
   && chmod 700 "$APP_DIR" "$DATA_DIR" "$CONF_DIR"
 
-RUN su $APP_USER
-
 # Remove existing crontabs, if any.
 RUN rm -fr /var/spool/cron \
 	&& rm -fr /etc/crontabs \
