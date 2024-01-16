@@ -17,6 +17,8 @@ RUN apk add gcc
 RUN apk add python3-dev
 
 # install packages in requirements.txt
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --update pip 
+
+RUN pip install -r requirements.txt
 
 CMD ["python3", "app.py"]
