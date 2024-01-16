@@ -7,6 +7,7 @@ import os
 import functions
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/invoice": {"origins": "https://client-calculadora-several2.thankfulgrass-02544078.westeurope.azurecontainerapps.io"}})
 CORS(app)
 app.config["DEBUG"] = True
 limiter = Limiter(
