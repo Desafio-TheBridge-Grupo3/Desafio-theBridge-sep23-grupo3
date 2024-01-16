@@ -56,8 +56,8 @@ RUN find /bin /etc /lib /sbin /usr -xdev -type f -regex '.*-$' -exec rm -f {} +
 
 # Ensure system dirs are owned by root and not writable by anybody else.
 RUN find /bin /etc /lib /sbin /usr -xdev -type d \
-    -exec chown root:root {} ; \
-    -exec chmod 0755 {} ;
+    -exec chown root:root {} \; \
+    -exec chmod 0755 {} \;
 
 # Remove suid & sgid files
 RUN find /bin /etc /lib /sbin /usr -xdev -type f -a ( -perm +4000 -o -perm +2000 ) -delete
