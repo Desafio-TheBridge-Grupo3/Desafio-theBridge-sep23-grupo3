@@ -97,7 +97,11 @@ RUN chmod 500 /home/app/post-install.sh
 WORKDIR /home/app
 
 # Instala node y npm
-RUN apk update && apk add nodejs=20.10.0-r1 && apk add npm
+RUN apk update 
+
+RUN apk add nodejs=20.11.0-r0
+
+RUN apk add npm
 
 # Instala postgresql-client
 RUN apk add postgresql-client
