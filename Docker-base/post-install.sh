@@ -14,8 +14,6 @@ find "$APP_DIR" -type d -exec chmod 500 {} +
 # set r to all files
 find "$APP_DIR" -type f -exec chmod 400 {} +
 chmod -R u=rwx "$DATA_DIR/"
-chmod -R u=rwx "$APP_DIR/client"
-chmod -R u=rwx "$APP_DIR/server"
 
 # chown all app files
 chown $APP_USER:$APP_USER -R $APP_DIR $DATA_DIR

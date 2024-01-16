@@ -91,6 +91,9 @@ RUN find /bin /etc /lib /sbin /usr -xdev -type l -exec test ! -e {} \; -delete
 # default directory is /app
 WORKDIR /home/app
 
+# add-in post installation file for permissions
+COPY post-install.sh /home/app
+
 RUN chmod 500 /home/app/post-install.sh
 
 # Instala node y npm
