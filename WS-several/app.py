@@ -17,6 +17,7 @@ sys.path.append(my_module_path)
 os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/filter_several": {"origins": "https://client-calculadora-several2.thankfulgrass-02544078.westeurope.azurecontainerapps.io"}})
 CORS(app)
 app.config["DEBUG"] = True
 limiter = Limiter(

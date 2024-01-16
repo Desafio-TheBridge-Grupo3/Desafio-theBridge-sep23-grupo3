@@ -22,7 +22,7 @@ os.chdir(os.path.dirname(__file__))
 queue_info = Queue()
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/cups20": {"origins": "https://client-calculadora-several.thankfulgrass-02544078.westeurope.azurecontainerapps.io"}})
+cors = CORS(app, resources={r"/cups20": {"origins": "https://client-calculadora-several2.thankfulgrass-02544078.westeurope.azurecontainerapps.io"}})
 CORS(app)
 app.config["DEBUG"] = True
 limiter = Limiter(
