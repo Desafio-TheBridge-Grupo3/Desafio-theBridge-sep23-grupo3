@@ -18,6 +18,8 @@ RUN apk add python3-dev
 
 RUN apk add mupdf-tools
 
+RUN apk add cmake
+
 # install packages in requirements.txt
 RUN pip install --upgrade pip
 
