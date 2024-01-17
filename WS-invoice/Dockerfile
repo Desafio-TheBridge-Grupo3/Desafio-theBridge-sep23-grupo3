@@ -1,5 +1,5 @@
 # Select the base image to build on top of
-FROM python:3.12.1-alpine3.19
+FROM python:3.12.1-bullseye
 
 USER root
 
