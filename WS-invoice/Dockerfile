@@ -10,17 +10,17 @@ COPY . .
 
 EXPOSE 5001
 
-RUN apk update 
+RUN apt-get update 
 
-RUN apk add gcc
+RUN apt-get add gcc
 
-RUN apk add python3-dev
+RUN apt-get add python3-dev
 
-RUN apk add mupdf-tools
+RUN apt-get add mupdf-tools
 
-RUN apk add musl-dev
+RUN apt-get add musl-dev
 
-RUN apk add cmake
+RUN apt-get add cmake
 
 # install packages in requirements.txt
 RUN pip install --upgrade pip
