@@ -10,7 +10,17 @@ COPY . .
 
 EXPOSE 5001
 
+RUN apk update 
+
+RUN apk add gcc
+
+RUN apk add python3-dev
+
+RUN apk add mupdf-tools
+
 # install packages in requirements.txt
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip
+
+RUN pip install -r requirements.txt
 
 CMD ["python3", "app.py"]
