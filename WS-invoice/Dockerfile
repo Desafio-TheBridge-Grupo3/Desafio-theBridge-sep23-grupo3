@@ -22,6 +22,20 @@ RUN apk add musl-dev
 
 RUN apk add cmake
 
+RUN apk add --no-cache \
+        build-base \
+        py3-numpy \
+        py3-opencv \
+        py3-pandas \
+        py3-flask \
+        py3-flask-limiter \
+        py3-flask-cors \
+        py3-werkzeug \
+        py3-pymupdf \
+        py3-pypdf2 \
+        py3-easyocr \
+        py3-setuptools
+
 # install packages in requirements.txt
 RUN pip install --upgrade pip
 
