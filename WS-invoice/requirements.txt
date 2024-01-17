@@ -56,16 +56,10 @@ PyYAML==6.0.1
 requests==2.31.0
 scikit-image==0.22.0
 scipy==1.11.4
-sympy==1.12
-tifffile==2023.12.9
 torch==2.1.2
 torchvision==0.16.2
 traitlets==5.9.0
-typing_extensions==4.9.0
-tzdata==2023.4
 urllib3==2.1.0
-wcwidth==0.2.6
 Werkzeug==3.0.1
-wrapt==1.16.0
 opencv-python==4.9.0.80
 opencv-python-headless==4.9.0.80
