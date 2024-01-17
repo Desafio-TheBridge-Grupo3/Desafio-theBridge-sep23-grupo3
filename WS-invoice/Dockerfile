@@ -1,5 +1,5 @@
 # Select the base image to build on top of
-FROM python:3.12.1-alpine3.19
+FROM python:3.12.1-bullseye
 
 USER root
 
@@ -10,16 +10,14 @@ COPY . .
 
 EXPOSE 5001
 
-RUN apk update 
-
-RUN apk add gcc
-
-RUN apk add python3-dev
-
-RUN apk add mupdf-tools
+RUN apt-get update 
 
 # install packages in requirements.txt
 RUN pip install --upgrade pip
+
+RUN pip install --upgrade pip setuptools
+
+RUN pip install --upgrade setuptools
 
 RUN pip install -r requirements.txt
 
