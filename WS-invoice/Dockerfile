@@ -12,16 +12,6 @@ EXPOSE 5001
 
 RUN apt-get update 
 
-RUN apt-get install gcc
-
-RUN apt-get install python3-dev
-
-RUN apt-get install mupdf-tools
-
-RUN apt-get install musl-dev
-
-RUN apt-get install cmake
-
 # install packages in requirements.txt
 RUN pip install --upgrade pip
 
