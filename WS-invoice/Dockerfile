@@ -25,6 +25,8 @@ RUN apk add cmake
 # install packages in requirements.txt
 RUN pip install --upgrade pip
 
+RUN pip install --upgrade setuptools
+
 RUN pip install -r requirements.txt
 
 CMD ["python3", "app.py"]
