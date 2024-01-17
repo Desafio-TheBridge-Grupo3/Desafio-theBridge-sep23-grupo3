@@ -4,6 +4,10 @@ variable "container_app_environment_id" {
   nullable    = false
 }
 
+variable "location" {
+  type = string
+}
+
 variable "resource-group-name" {
   type        = string
   description = "(Required) The name of the resource group in which the resources will be created."
@@ -35,7 +39,7 @@ variable "container_app" {
 
       env = optional(list(object({
         name        = string,
-        secret_name = optional(string),
+        secret_name = string,
       })))
     }),
 

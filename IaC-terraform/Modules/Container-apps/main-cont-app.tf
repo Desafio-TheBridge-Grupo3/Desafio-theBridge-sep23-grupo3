@@ -60,6 +60,10 @@ resource "azurerm_container_app" "container_app" {
     }
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   timeouts {
     create = "20m" # Set the create timeout to 20 minutes
   }

@@ -7,6 +7,7 @@
   pg-flex-name = "database-desafio-grupo3"
 
 # Containers
+  container_registry_name = "SeveralEnergyCalculadora"
   log_analytics_workspace_name_dev = "Log-analytics-DEV"
   container_app_environment_name_dev = "env-container-apps-dev"
   dapr_component_type = "bindings.postgresql"
@@ -17,7 +18,7 @@
 
       template = {
         min_replicas     = 1
-        max_replicas     = 10
+        max_replicas     = 5
         image            = "mcr.microsoft.com/azuredocs/aci-helloworld"
         name             = "wscandeladev"
         cpu              = 0.5
@@ -31,7 +32,7 @@
               {name  = "PWD_CANELA"
               secret_name = "password-candela"}
         ]
-      },
+      }
 
       http_scale_rule = {
         name                = "http-candela"
@@ -52,7 +53,7 @@
         {name = "password-candela"                                  # Almacenado como terraform secret
         sec-value = var.PWD_CANDELA}
       ]
-    },
+    }
   }
   # API de facturas
   container_app_invoice_dev = {API-invoice = {
@@ -60,14 +61,14 @@
 
       template = {
         min_replicas     = 1
-        max_replicas     = 10
+        max_replicas     = 5
         image            = "mcr.microsoft.com/azuredocs/aci-helloworld"
         name             = "wsinvoicedev"
         cpu              = 0.5
         memory_gigaBytes = 1
 
         env = []
-      },
+      }
 
       http_scale_rule = {
         name                = "http-invoice"
@@ -81,18 +82,18 @@
       }
 
       secret = []
-    },
+    }
   }
 
-  # Servidor backend
-  container_app_server_dev = {SERVER = {
-      name = "server-develop"
+  # API de actualizar tabla
+  container_app_update_dev = {API-table = {
+      name = "table-api-dev"
 
       template = {
         min_replicas     = 1
-        max_replicas     = 10
+        max_replicas     = 5
         image            = "mcr.microsoft.com/azuredocs/aci-helloworld"
-        name             = "serverdevelop"
+        name             = "updatetabledev"
         cpu              = 0.5
         memory_gigaBytes = 1
 
@@ -108,17 +109,69 @@
               {name  = "JWT_SECRET"
               secret_name = "jwtsecret"},
               {name  = "SESSION_SECRET"
-              secret_name = "sessionsecret"},
-              {name  = "DOMAIN_URL"
-              value = ""},
-              {name  = "PORT"
-              value = "3000"}
+              secret_name = "sessionsecret"}
+              ]
+      }
+
+      http_scale_rule = {
+        name                = "http-table"
+        concurrent_requests = 5
+      }
+
+      ingress = {
+        target_port                = 5002
+        allow_insecure_connections = false
+        external_enabled           = true
+      }
+
+      secret = [
+        {name = "sqluser"                  # Almacenado como terraform secret
+        sec-value = var.PG-ADMIN-USER},
+        {name = "sqlpwd"                   # Almacenado como terraform secret
+        sec-value = var.PG-ADMIN-PWD},
+        {name = "sqlhost"                  # Proporcionado por output
+        sec-value = module.database.host},
+        {name = "sqldatabase"
+        sec-value = "proyectoTribu"},
+        {name = "jwtsecret"                # Almacenado como terraform secret
+        sec-value = var.JWT_SECRET},
+        {name = "sessionsecret"            # Almacenado como terraform secret
+        sec-value = var.SESSION_SECRET}
         ]
-      },
+    },
+  }
+
+    # Servidor backend
+  container_app_server_dev = {server-cont = {
+      name = "dev-server"
+
+      template = {
+        min_replicas     = 1
+        max_replicas     = 5
+        image            = "mcr.microsoft.com/azuredocs/aci-helloworld"
+        name             = "server-develop"
+        cpu              = 0.5
+        memory_gigaBytes = 1
+
+        env = [
+              {name  = "SQL_USER"
+              secret_name = "sqluser"},
+              {name  = "SQL_PWD"
+              secret_name = "sqlpwd"},
+              {name  = "SQL_HOST"
+              secret_name = "sqlhost"},
+              {name  = "SQL_DATABASE"
+              secret_name = "sqldatabase"},
+              {name  = "JWT_SECRET"
+              secret_name = "jwtsecret"},
+              {name  = "SESSION_SECRET"
+              secret_name = "sessionsecret"}
+              ]
+      }
 
       http_scale_rule = {
         name                = "http-server"
-        concurrent_requests = 20
+        concurrent_requests = 5
       }
 
       ingress = {
@@ -139,19 +192,20 @@
         {name = "jwtsecret"                # Almacenado como terraform secret
         sec-value = var.JWT_SECRET},
         {name = "sessionsecret"            # Almacenado como terraform secret
-        sec-value = var.SESSION_SECRET},
-      ]
+        sec-value = var.SESSION_SECRET}
+        ]
     },
   }
+
   # Servidor frontend
-  container_app_client_dev = {CLIENT = {
+  container_app_client_dev = {client-cont = {
       name = "client-develop"
 
       template = {
         min_replicas     = 1
-        max_replicas     = 10
+        max_replicas     = 5
         image            = "mcr.microsoft.com/azuredocs/aci-helloworld"
-        name             = "clientdevelop"
+        name             = "client-dev"
         cpu              = 0.5
         memory_gigaBytes = 1
 
@@ -167,7 +221,7 @@
 
       http_scale_rule = {
         name                = "http-client"
-        concurrent_requests = 20
+        concurrent_requests = 5
       }
 
       ingress = {
