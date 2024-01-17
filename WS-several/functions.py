@@ -1,8 +1,6 @@
 import psycopg2
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 DATABASE_NAME = os.getenv('DATABASE_NAME')
 USER = os.getenv('USER')
 PASSWORD = os.getenv('PASSWORD')
