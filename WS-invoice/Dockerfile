@@ -16,6 +16,8 @@ RUN apk add gcc
 
 RUN apk add python3-dev
 
+RUN apk add mupdf-tools
+
 # install packages in requirements.txt
 RUN pip install --upgrade pip
 
