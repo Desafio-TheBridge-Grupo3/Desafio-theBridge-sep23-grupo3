@@ -26,7 +26,7 @@ variables:
   azureSubscription: 'conexion-azure-cloud'
   resourceGroup: 'RECURSOS-desafiotripulacionesG3'
   containerAppEnvironment: 'env-container-app-desafiotripulacionesg3'
-  containerAppName: 'upda-tetable-calculadora-several2'
+  containerAppName: 'table-api-dev'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
