@@ -9,7 +9,6 @@ comm==0.1.3
 debugpy==1.6.7
 decorator==5.1.1
 Deprecated==1.2.14
-easyocr==1.7.1
 executing==1.2.0
 filelock==3.13.1
 Flask==3.0.0
