@@ -48,7 +48,6 @@ def insert_several():
     try:
       df_fixed = read_info_prices(PATH_XLSX, 1, "FIJO")
       df_fixed.drop(columns="Unnamed: 0", inplace=True, axis=1)
-
       df_fixed.rename(columns={"sistema": "zone",
                               "cia": "cia",
                               "producto": "market",
@@ -70,10 +69,10 @@ def insert_several():
                               }, inplace=True)
       
       df_fixed_info = df_fixed.iloc[:,0:5]
-      df_fixed_con = df_fixed.iloc[:,6:11]
-      df_fixed_pow = df_fixed.iloc[:,11:]
+      df_fixed_con = df_fixed.iloc[:,0:12]
+      df_fixed_pow = df_fixed.iloc[:,12:]
 
-      df_fixed_info_con = pd.concat([df_fixed_info,df_fixed_con])
+      df_fixed_info_con = pd.merge(df_fixed_info,df_fixed_con)
     
       df_indexed = read_info_prices(PATH_XLSX, 3, "INDEXADO")
       df_indexed_date = df_indexed.iloc[:,0:12]
@@ -124,9 +123,9 @@ def insert_several():
       df_power["market"] = df_power["market"].apply(lambda m: "F" if m == "FIJO" else "I")
       df_power.fillna(value=0)
       df_power["fee"] = ""
-      print(df_power)
+
+      df_fixed_pow = pd.concat([df_fixed_info,df_fixed_pow], axis=1)
       df_fixed_info_pow = pd.concat([df_power,df_fixed_pow])
-      print(df_fixed_info_pow)
       df_fixed_info_pow.to_sql('cia_pow_several', con=engine, index=False, if_exists='replace')
 
       engine.dispose()

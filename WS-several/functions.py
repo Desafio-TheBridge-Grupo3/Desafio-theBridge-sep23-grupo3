@@ -71,8 +71,6 @@ def con_filter_info(con, res):
                 AND
                     product_cia= '{res_clean['product_cia']}'
                 AND
-                    fee= '{res_clean['fee']}'
-                AND
                     market= '{res_clean['market']}';
 
             """
@@ -168,12 +166,12 @@ def con_filter_info(con, res):
         print(results)
         if results:
             result_pow = {
-                    "pow_price_P1": results[0][0],
-                    "pow_price_P2": results[0][1],
-                    "pow_price_P3": results[0][2],
-                    "pow_price_P4": results[0][3],
-                    "pow_price_P5": results[0][4],
-                    "pow_price_P6": results[0][5]
+                    "pow_price_P1": float(results[0][0]),
+                    "pow_price_P2": float(results[0][1]),
+                    "pow_price_P3": float(results[0][2]),
+                    "pow_price_P4": float(results[0][3]),
+                    "pow_price_P5": float(results[0][4]),
+                    "pow_price_P6": float(results[0][5])
             }
         else:
             result_pow = None
